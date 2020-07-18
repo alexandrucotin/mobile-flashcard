@@ -7,7 +7,7 @@
     "clean:ios": "cd ios && rm -rf build/ && cd ..",
     "clean:node_modules": "rm -rf node_modules",
     "start": "react-native run-ios",
-    "test": "jest"
+    "bootstrap": "npm i && cd ios && pod install"
   },
   "dependencies": {
     "expo": "~38.0.1",
