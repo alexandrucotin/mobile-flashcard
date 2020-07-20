@@ -25,8 +25,8 @@ class Card extends Component {
     const { question, backCard } = this.props.card;
     if (showAnswer) {
       return (
-        <View>
-          <Text>{backCard}</Text>
+        <View style={styles.backCard}>
+          <Text style={styles.questionText}>{backCard}</Text>
           <TouchableOpacity onPress={toggleShowAnswer}>
             <Text style={styles.underTitle}>hide answer</Text>
           </TouchableOpacity>
@@ -90,6 +90,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  backCard: {
+      flex:1,
+      alignItems: "center",
+      justifyContent: "center"
+  }
 });
 
 function mapStateToProps({ cards }, { cardId, toggleAnswer, showAnswer,toggleShowAnswer  }) {

@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomNav from "./BottomNav";
 import Deck from "./Deck";
 import Quiz from "./Quiz"
+import QuizSum from "./QuizSum"
 
 const Stack = createStackNavigator();
 
@@ -30,10 +31,17 @@ const Navigation = () => {
             animationEnabled: true,
           }}
         />
-
         <Stack.Screen
           name="Quiz"
           component={Quiz}
+          options={{
+            animationEnabled: true,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="QuizSum"
+          component={QuizSum}
           options={{
             animationEnabled: true,
             headerShown: false,
