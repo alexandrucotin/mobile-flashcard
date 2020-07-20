@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StatusBar, View } from "react-native";
+import Constants from "expo-constants";
 
-export default function App() {
+// Redux
+import reducer from "./reducers";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+// Navigation
+import Navigation from "./components/Navigation"
+
+
+
+function CustomStatusBar({ backgroundColor, ...props }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <Provider store={createStore(reducer)}>
+      <CustomStatusBar />
+      <Navigation />
+    </Provider>
+  );
+}

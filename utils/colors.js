@@ -1,0 +1,11 @@
+export const lavender = "#C1BBDD";
+export const lumber = "#FFDFD3";
+export const thistle = "#DABFDE";
+export const blue = "#C1E7E3";
+export const cyan = "#DCFFFB";
+export const pink = "#FFDCF4";
+export const manatee = "#9A91AC";
+export const white = "#ffffff";
+export const red = "#ff6961";
+export const green = "#77dd77";
+export const darkBlue = "#779ecb";
