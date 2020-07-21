@@ -18,7 +18,7 @@ import {
 
 class Card extends Component {
   render() {
-    const { cardId, toggleAnswer, showAnswer, toggleShowAnswer } = this.props;
+    const { cardId, toggleIncorrectAnswer, toggleCorrectAnswer, showAnswer, toggleShowAnswer } = this.props;
     if (!cardId) {
       return <Text>Loading...</Text>;
     }
@@ -44,10 +44,14 @@ class Card extends Component {
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: green }]}
+              onPress={toggleCorrectAnswer}
             >
               <Text style={{ color: white, fontWeight: "bold" }}>Correct</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: red }]}>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: red }]}
+              onPress={(toggleIncorrectAnswer)}
+            >
               <Text style={{ color: white, fontWeight: "bold" }}>
                 Incorrect
               </Text>
@@ -91,15 +95,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   backCard: {
-      flex:1,
-      alignItems: "center",
-      justifyContent: "center"
-  }
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
-function mapStateToProps({ cards }, { cardId, toggleAnswer, showAnswer,toggleShowAnswer  }) {
+function mapStateToProps(
+  { cards },
+  { cardId, toggleAnswer, showAnswer, toggleIncorrectAnswer, toggleCorrectAnswer }
+) {
   const card = cards[cardId];
-  return { card, toggleAnswer,toggleShowAnswer, showAnswer };
+  return { card, toggleAnswer, toggleIncorrectAnswer, toggleCorrectAnswer, showAnswer };
 }
 
 export default connect(mapStateToProps)(Card);

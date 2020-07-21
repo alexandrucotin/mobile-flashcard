@@ -18,14 +18,14 @@ const cards = {
     answer: "incorrect",
     deck: "react",
   },
-  "am8ehyc8byjqgar0jgpub9": {
+  am8ehyc8byjqgar0jgpub9: {
     id: "am8ehyc8byjqgar0jgpub9",
     question: "Html is a programming language",
-    backCard: "Html is a mockup language. It is used to create html pages.",
+    backCard: "Html is a marckup language. It is used to create html pages.",
     answer: "incorrect",
     deck: "web",
   },
-  "loxhs1bqm25b708cmbf3g": {
+  loxhs1bqm25b708cmbf3g: {
     id: "loxhs1bqm25b708cmbf3g",
     question: "Css is used to style your html",
     backCard: "Cascade stylesheet is used to modify your html pages style.",
@@ -57,7 +57,7 @@ function formatCards(results) {
 
 function setDummyCards() {
   AsyncStorage.setItem(CARDS, JSON.stringify(cards));
-  return cards;
+  return Promise.resolve(JSON.stringify(cards));
 }
 
 // SET DECKS
@@ -72,5 +72,5 @@ function formatDecks(results) {
 
 function setDummyDecks() {
   AsyncStorage.setItem(DECKS, JSON.stringify(decks));
-  return decks;
+  return Promise.resolve(JSON.stringify(decks));
 }

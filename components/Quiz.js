@@ -14,8 +14,6 @@ function arrows(
   state,
   navigate
 ) {
-  console.log(totalQuestions);
-  console.log(index);
   if (totalQuestions === index) {
     return (
       <View style={styles.arrowsContainer}>
@@ -87,8 +85,8 @@ class Quiz extends Component {
     }));
   };
 
-  toggleAnswer = () => {
-    const answers = {};
+  toggleCorrectAnswer = (e) => {
+    let answers = {};
   };
 
   exitQuiz = () => {
@@ -114,9 +112,9 @@ class Quiz extends Component {
         <View style={styles.cardContainer}>
           <Card
             cardId={questions[currentQuestionIndex]}
-            toggleAnswer={this.toggleAnswer}
             showAnswer={this.state.showAnswer}
-            toggleShowAnswer={this.showAnswer}
+            toggleShowAnswer={this.toggleAnswer}
+            toggleCorrectAnswer={this.toggleCorrectAnswer}
           />
           {arrows(
             questions.length - 1,

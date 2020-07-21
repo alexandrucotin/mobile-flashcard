@@ -5,6 +5,7 @@ export default class QuizSum extends Component {
   returnHome = () => {
     this.props.navigation.navigate("home");
   };
+  
   render() {
     return (
       <View>

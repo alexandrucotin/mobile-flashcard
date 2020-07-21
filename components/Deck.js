@@ -2,17 +2,15 @@ import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
-import {
-  lavender,
-  lumber,
-  thistle,
-  blue,
-  cyan,
-  pink,
-  white,
-} from "../utils/colors";
+import { thistle, white } from "../utils/colors";
 
 class Deck extends Component {
+  beginQuiz = () => {
+    const { dispatch } = this.props;
+    dispatch();
+    this.props.navigation.navigate("Quiz", { deckId: id });
+  };
+
   render() {
     const { decks } = this.props;
     const id = this.props.route.params.deckId;
@@ -23,12 +21,7 @@ class Deck extends Component {
           <Text style={styles.deckTitle}>{id}</Text>
           <Text style={styles.deckCards}>{deck.questions.length} cards</Text>
         </View>
-        <TouchableOpacity
-          style={styles.quitzBtn}
-          onPress={() =>
-            this.props.navigation.navigate("Quiz",{deckId: id})
-          }
-        >
+        <TouchableOpacity style={styles.quitzBtn} onPress={this.beginQuiz}>
           <Text style={{ color: white }}>Take Quitz!</Text>
         </TouchableOpacity>
       </View>
