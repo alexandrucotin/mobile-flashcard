@@ -18,16 +18,22 @@ import {
 
 class Card extends Component {
   render() {
-    const { cardId, toggleIncorrectAnswer, toggleCorrectAnswer, showAnswer, toggleShowAnswer } = this.props;
+    const {
+      cardId,
+      toggleIncorrectAnswer,
+      toggleCorrectAnswer,
+      stateShowAnswer,
+      showAnswer,
+    } = this.props;
     if (!cardId) {
       return <Text>Loading...</Text>;
     }
     const { question, backCard } = this.props.card;
-    if (showAnswer) {
+    if (stateShowAnswer) {
       return (
         <View style={styles.backCard}>
           <Text style={styles.questionText}>{backCard}</Text>
-          <TouchableOpacity onPress={toggleShowAnswer}>
+          <TouchableOpacity onPress={showAnswer}>
             <Text style={styles.underTitle}>hide answer</Text>
           </TouchableOpacity>
         </View>
@@ -37,7 +43,7 @@ class Card extends Component {
         <View style={styles.questionView}>
           <View>
             <Text style={styles.questionText}>{question}</Text>
-            <TouchableOpacity onPress={toggleShowAnswer}>
+            <TouchableOpacity onPress={showAnswer}>
               <Text style={styles.underTitle}>show answer</Text>
             </TouchableOpacity>
           </View>
@@ -50,7 +56,7 @@ class Card extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: red }]}
-              onPress={(toggleIncorrectAnswer)}
+              onPress={toggleIncorrectAnswer}
             >
               <Text style={{ color: white, fontWeight: "bold" }}>
                 Incorrect
@@ -103,10 +109,22 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(
   { cards },
-  { cardId, toggleAnswer, showAnswer, toggleIncorrectAnswer, toggleCorrectAnswer }
+  {
+    cardId,
+    stateShowAnswer,
+    showAnswer,
+    toggleIncorrectAnswer,
+    toggleCorrectAnswer,
+  }
 ) {
   const card = cards[cardId];
-  return { card, toggleAnswer, toggleIncorrectAnswer, toggleCorrectAnswer, showAnswer };
+  return {
+    card,
+    showAnswer,
+    toggleIncorrectAnswer,
+    toggleCorrectAnswer,
+    stateShowAnswer,
+  };
 }
 
 export default connect(mapStateToProps)(Card);

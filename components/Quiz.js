@@ -90,11 +90,6 @@ class Quiz extends Component {
   };
 
   exitQuiz = () => {
-    this.setState(() => ({
-      correctAnswers: 0,
-      currentQuestionIndex: 0,
-      questions: [],
-    }));
     this.props.navigation.navigate("home");
   };
 
@@ -103,7 +98,8 @@ class Quiz extends Component {
   };
   render() {
     const { currentQuestionIndex, questions } = this.state;
-
+    const { quiz } = this.props;
+    console.log(quiz);
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.counterText}>
@@ -112,8 +108,8 @@ class Quiz extends Component {
         <View style={styles.cardContainer}>
           <Card
             cardId={questions[currentQuestionIndex]}
-            showAnswer={this.state.showAnswer}
-            toggleShowAnswer={this.toggleAnswer}
+            stateShowAnswer={this.state.showAnswer}
+            showAnswer={this.showAnswer}
             toggleCorrectAnswer={this.toggleCorrectAnswer}
           />
           {arrows(
@@ -160,12 +156,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   quizSum: {
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
   },
 });
 
-function mapStateToProps({ decks }) {
-  return { decks };
+function mapStateToProps({ decks, quiz }) {
+  return { decks, quiz };
 }
 
 export default connect(mapStateToProps)(Quiz);

@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import { beginQuiz } from "../actions/quiz";
 
 import { thistle, white } from "../utils/colors";
 
 class Deck extends Component {
   beginQuiz = () => {
-    const { dispatch } = this.props;
-    dispatch();
+    const id = this.props.route.params.deckId;
+    const { dispatch, questions, decks } = this.props;
+    const deck = decks[id];
+
+    dispatch(beginQuiz(deck, questions));
     this.props.navigation.navigate("Quiz", { deckId: id });
   };
 
@@ -21,8 +25,11 @@ class Deck extends Component {
           <Text style={styles.deckTitle}>{id}</Text>
           <Text style={styles.deckCards}>{deck.questions.length} cards</Text>
         </View>
-        <TouchableOpacity style={styles.quitzBtn} onPress={this.beginQuiz}>
-          <Text style={{ color: white }}>Take Quitz!</Text>
+        <TouchableOpacity
+          style={styles.quitzBtn}
+          onPress={this.beginQuiz}
+        >
+          <Text style={{ color: white }}>Take Quiz!</Text>
         </TouchableOpacity>
       </View>
     );
@@ -54,8 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-const mapStateToProps = ({ decks }) => {
-  return { decks };
+const mapStateToProps = ({ decks, questions }) => {
+  return { decks, questions };
 };
 
 export default connect(mapStateToProps)(Deck);
