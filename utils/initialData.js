@@ -4,14 +4,14 @@ const CARDS = "CARDS";
 const DECKS = "DECKS";
 
 const cards = {
-  "8xf0y6ziyjabvozdd253nd": {
+  x8f0y6ziyjabvozdd253nd: {
     id: "8xf0y6ziyjabvozdd253nd",
     question: "React was introduced in 2013",
     backCard: "React was introduced in march 2013 as beta",
     answer: "correct",
     deck: "react",
   },
-  "6ni6ok3ym7mf1p33lnez": {
+  n6i6ok3ym7mf1p33lnez: {
     id: "6ni6ok3ym7mf1p33lnez",
     question: "React is written in python",
     backCard: "To write React you must have a good knowledge of javascript.",
@@ -21,7 +21,7 @@ const cards = {
   am8ehyc8byjqgar0jgpub9: {
     id: "am8ehyc8byjqgar0jgpub9",
     question: "Html is a programming language",
-    backCard: "Html is a marckup language. It is used to create html pages.",
+    backCard: "Html is a markup language. It is used to create html pages.",
     answer: "incorrect",
     deck: "web",
   },

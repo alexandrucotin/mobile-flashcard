@@ -1,18 +1,41 @@
-import { BEGIN_QUIZ } from "../actions/quiz";
+import { BEGIN_QUIZ, SET_USER_ANSWER, EXIT_QUIZ } from "../actions/quiz";
 
 export default function quiz(state = {}, action) {
-    console.log(action.deck)
   switch (action.type) {
     case BEGIN_QUIZ:
-      const { deck, questions } = action;
+      const { deck, cards } = action;
       return {
-        [deck]: {
-          id: [deck],
-          answers: questions.map((question) => ({
-            questionAnswer: question.answer,
-            userAnswer: null,
-          })),
-        },
+        id: deck.id,
+        answers: deck.questions.map((question) => ({
+          questionAnswer: cards[question].answer,
+          userAnswer: null,
+          questionAnsweredCorrectly: null,
+        })),
       };
+    case SET_USER_ANSWER:
+      const { answer, index } = action;
+      return {
+        id: state.id,
+        answers: state.answers.map((question, idx) => {
+          const questionAnswer = state.answers[idx].questionAnswer;
+          const userAnswer =
+            index === idx ? answer : state.answers[idx].userAnswer;
+          const questionAnsweredCorrectly =
+            userAnswer === null ? null : questionAnswer === userAnswer;
+          return {
+            questionAnswer,
+            userAnswer,
+            questionAnsweredCorrectly,
+          };
+        }),
+      };
+    case EXIT_QUIZ: {
+      return {
+        id: null,
+        answers: [],
+      };
+    }
+    default:
+      return state;
   }
 }

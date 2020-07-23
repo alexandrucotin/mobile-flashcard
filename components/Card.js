@@ -3,27 +3,18 @@ import { Text, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import {
-  lavender,
-  white,
-  lumber,
-  red,
-  green,
-  thistle,
-  blue,
-  cyan,
-  pink,
-  darkBlue,
-} from "../utils/colors";
+import { darkBlue } from "../utils/colors";
+import CardButtons from "./CardButtons";
 
 class Card extends Component {
   render() {
     const {
       cardId,
-      toggleIncorrectAnswer,
-      toggleCorrectAnswer,
+      setCorrectAnswer,
+      setIncorrectAnswer,
       stateShowAnswer,
       showAnswer,
+      currentQuestionIndex,
     } = this.props;
     if (!cardId) {
       return <Text>Loading...</Text>;
@@ -47,22 +38,11 @@ class Card extends Component {
               <Text style={styles.underTitle}>show answer</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: green }]}
-              onPress={toggleCorrectAnswer}
-            >
-              <Text style={{ color: white, fontWeight: "bold" }}>Correct</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: red }]}
-              onPress={toggleIncorrectAnswer}
-            >
-              <Text style={{ color: white, fontWeight: "bold" }}>
-                Incorrect
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <CardButtons
+            currentQuestionIndex={currentQuestionIndex}
+            setIncorrectAnswer={setIncorrectAnswer}
+            setCorrectAnswer={setCorrectAnswer}
+          />
         </View>
       );
     }
@@ -89,17 +69,6 @@ const styles = StyleSheet.create({
     color: darkBlue,
     textAlign: "center",
   },
-  buttonsContainer: {
-    flexDirection: "row",
-  },
-  button: {
-    borderRadius: 10,
-    padding: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
-    marginLeft: 10,
-    marginRight: 10,
-  },
   backCard: {
     flex: 1,
     alignItems: "center",
@@ -108,22 +77,25 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(
-  { cards },
+  { cards, quiz },
   {
     cardId,
     stateShowAnswer,
     showAnswer,
-    toggleIncorrectAnswer,
-    toggleCorrectAnswer,
+    setCorrectAnswer,
+    setIncorrectAnswer,
+    currentQuestionIndex,
   }
 ) {
   const card = cards[cardId];
   return {
+    quiz,
     card,
     showAnswer,
-    toggleIncorrectAnswer,
-    toggleCorrectAnswer,
+    setIncorrectAnswer,
+    setCorrectAnswer,
     stateShowAnswer,
+    currentQuestionIndex,
   };
 }
 

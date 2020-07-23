@@ -9,3 +9,4 @@ export const white = "#ffffff";
 export const red = "#ff6961";
 export const green = "#77dd77";
 export const darkBlue = "#779ecb";
+export const grey = "#d7d7d1";

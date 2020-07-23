@@ -1,53 +1,17 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import Card from "./Card";
-import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { darkBlue, pink } from "../utils/colors";
 
-function arrows(
-  totalQuestions,
-  index,
-  prevQuestion,
-  nextQuestion,
-  state,
-  navigate
-) {
-  if (totalQuestions === index) {
-    return (
-      <View style={styles.arrowsContainer}>
-        <TouchableOpacity onPress={prevQuestion}>
-          <Feather name="arrow-left-circle" size={30} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={navigate}>
-          <Text style={styles.quizSum}>Show quiz summary</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  } else if (index > 0 && index < totalQuestions && !state) {
-    return (
-      <View style={styles.arrowsContainer}>
-        <TouchableOpacity onPress={prevQuestion}>
-          <Feather name="arrow-left-circle" size={30} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={nextQuestion}>
-          <Feather name="arrow-right-circle" size={30} />
-        </TouchableOpacity>
-      </View>
-    );
-  } else if (state) {
-    return null;
-  } else {
-    return (
-      <View style={styles.arrowsContainer}>
-        <TouchableOpacity onPress={nextQuestion}>
-          <Feather name="arrow-right-circle" size={30} />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+// Redux
+import { connect } from "react-redux";
+import { setUserAnswer } from "../actions/quiz";
+
+// Components
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Card from "./Card";
+import { Text, StyleSheet, View } from "react-native";
+import ArrowsNavigation from "./ArrowsNavigation";
+
+// Colors
+import { darkBlue } from "../utils/colors";
 
 class Quiz extends Component {
   state = {
@@ -69,7 +33,6 @@ class Quiz extends Component {
     this.setState((state) => ({
       showAnswer: !state.showAnswer,
     }));
-
     return this.state.showAnswer;
   };
 
@@ -85,8 +48,14 @@ class Quiz extends Component {
     }));
   };
 
-  toggleCorrectAnswer = (e) => {
-    let answers = {};
+  setCorrectAnswer = () => {
+    const { dispatch } = this.props;
+    dispatch(setUserAnswer("correct", this.state.currentQuestionIndex));
+  };
+
+  setIncorrectAnswer = () => {
+    const { dispatch } = this.props;
+    dispatch(setUserAnswer("incorrect", this.state.currentQuestionIndex));
   };
 
   exitQuiz = () => {
@@ -99,7 +68,6 @@ class Quiz extends Component {
   render() {
     const { currentQuestionIndex, questions } = this.state;
     const { quiz } = this.props;
-    console.log(quiz);
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.counterText}>
@@ -110,16 +78,18 @@ class Quiz extends Component {
             cardId={questions[currentQuestionIndex]}
             stateShowAnswer={this.state.showAnswer}
             showAnswer={this.showAnswer}
-            toggleCorrectAnswer={this.toggleCorrectAnswer}
+            setCorrectAnswer={this.setCorrectAnswer}
+            setIncorrectAnswer={this.setIncorrectAnswer}
+            currentQuestionIndex={this.state.currentQuestionIndex}
           />
-          {arrows(
-            questions.length - 1,
-            currentQuestionIndex,
-            this.prevQuestion,
-            this.nextQuestion,
-            this.state.showAnswer,
-            this.navigateToQuizSum
-          )}
+          <ArrowsNavigation
+            totalQuestions={questions.length - 1}
+            index={currentQuestionIndex}
+            prevQuestion={this.prevQuestion}
+            nextQuestion={this.nextQuestion}
+            state={this.state.showAnswer}
+            navigate={this.navigateToQuizSum}
+          />
         </View>
         {this.state.showAnswer ? null : (
           <TouchableOpacity onPress={this.exitQuiz}>
@@ -148,12 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: darkBlue,
     textDecorationLine: "underline",
-  },
-  arrowsContainer: {
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    textAlign: "center",
-    flexDirection: "row",
   },
   quizSum: {
     textDecorationLine: "underline",
