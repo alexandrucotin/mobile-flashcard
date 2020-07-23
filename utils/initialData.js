@@ -5,14 +5,14 @@ const DECKS = "DECKS";
 
 const cards = {
   x8f0y6ziyjabvozdd253nd: {
-    id: "8xf0y6ziyjabvozdd253nd",
+    id: "x8f0y6ziyjabvozdd253nd",
     question: "React was introduced in 2013",
     backCard: "React was introduced in march 2013 as beta",
     answer: "correct",
     deck: "react",
   },
   n6i6ok3ym7mf1p33lnez: {
-    id: "6ni6ok3ym7mf1p33lnez",
+    id: "n6i6ok3ym7mf1p33lnez",
     question: "React is written in python",
     backCard: "To write React you must have a good knowledge of javascript.",
     answer: "incorrect",
@@ -37,7 +37,7 @@ const cards = {
 const decks = {
   react: {
     id: "react",
-    questions: ["8xf0y6ziyjabvozdd253nd", "6ni6ok3ym7mf1p33lnez"],
+    questions: ["x8f0y6ziyjabvozdd253nd", "n6i6ok3ym7mf1p33lnez"],
   },
   web: {
     id: "web",

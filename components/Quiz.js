@@ -15,7 +15,6 @@ import { darkBlue } from "../utils/colors";
 
 class Quiz extends Component {
   state = {
-    correctAnswers: 0,
     currentQuestionIndex: 0,
     questions: [],
     showAnswer: false,
@@ -67,7 +66,6 @@ class Quiz extends Component {
   };
   render() {
     const { currentQuestionIndex, questions } = this.state;
-    const { quiz } = this.props;
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.counterText}>

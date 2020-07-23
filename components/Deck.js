@@ -57,8 +57,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-const mapStateToProps = ({ decks, cards }) => {
+
+function mapStateToProps({ decks, cards }) {
   return { decks, cards };
-};
+}
 
 export default connect(mapStateToProps)(Deck);
