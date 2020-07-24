@@ -3,9 +3,9 @@ import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
 import { darkBlue } from "../utils/colors";
+import { resetQuiz } from "../actions/quiz";
 
 const returnStats = (quiz, cards) => {
-  console.log(cards);
   const userAnswers = quiz.answers.filter(
     (answer) => answer.questionAnsweredCorrectly === true
   );
@@ -14,16 +14,48 @@ const returnStats = (quiz, cards) => {
   );
   return (
     <View style={styles.quizSumResults}>
-      <Text style={{marginBottom: 20, fontSize:18, fontWeight: "bold"}}>
-        Your score is {userAnswers.length} / {quiz.answers.length}
+      <Text style={{ marginBottom: 20, fontSize: 30, fontWeight: "bold" }}>
+        Your score is {(userAnswers.length / quiz.answers.length) * 100}%
       </Text>
       <View style={styles.questionsResult}>
-        <Text style={{textAlign: "center"}}>The questions are</Text>
         {questionsQuiz.map((question, index) => (
           <View key={question} style={styles.eachQuestion}>
-            <Text style={{marginBottom: 10, fontStyle: "italic"}}>{index+1}. {cards[question].question}</Text>
-            <Text>    You answered {quiz.answers[index].userAnswer}.</Text>
-            <Text>    The correct answer is {cards[question].answer}</Text>
+            <Text
+              style={{
+                marginBottom: 20,
+                fontStyle: "italic",
+                textAlign: "center",
+              }}
+            >
+              {index + 1}. {cards[question].question}
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+              }}
+            >
+              You answered{" "}
+              <Text style={{ fontWeight: "bold" }}>
+                {quiz.answers[index].userAnswer}
+              </Text>
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+              }}
+            >
+              The correct answer is{" "}
+              <Text style={{ fontWeight: "bold" }}>
+                {cards[question].answer}
+              </Text>
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+              }}
+            >
+              {cards[question].backCard}
+            </Text>
           </View>
         ))}
       </View>
@@ -36,20 +68,26 @@ class QuizSum extends Component {
     this.props.navigation.navigate("home");
   };
 
+  resetQuiz = () => {
+    const resetQuizUI = this.props.route.params.resetQuiz;
+    const { dispatch, quiz } = this.props;
+    dispatch(resetQuiz(quiz));
+    resetQuizUI(quiz.id);
+  };
+
   render() {
     const { quiz, cards } = this.props;
     return (
       <View style={styles.quizSumContainer}>
-        <View style={styles.quizSumStats}>
-          <Text style={styles.quizSumTitle}> Quiz summary </Text>
-          <Text style={styles.quizSumSubTitle}>
-            Those are the stats of your quiz about {quiz.id}
-          </Text>
-          {returnStats(quiz, cards)}
+        <View style={styles.quizSumStats}>{returnStats(quiz, cards)}</View>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity onPress={this.resetQuiz}>
+            <Text style={styles.exitQuiz}>reset quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.returnHome}>
+            <Text style={styles.exitQuiz}>return home</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={this.returnHome}>
-          <Text style={styles.exitQuiz}>return Home</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -72,7 +110,7 @@ const styles = StyleSheet.create({
   },
   quizSumSubTitle: {
     fontSize: 20,
-    marginBottom:20,
+    marginBottom: 20,
     textDecorationLine: "underline",
   },
   exitQuiz: {
@@ -83,14 +121,16 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   quizSumResults: {
-    justifyContent: "center",
     alignItems: "center",
   },
   questionsResult: {
+    alignItems: "center",
   },
   eachQuestion: {
-    marginTop: 20
-  }
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginTop: 30,
+  },
 });
 
 function mapStateToProps({ quiz, cards }) {

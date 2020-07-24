@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { beginQuiz } from "../actions/quiz";
 
-import { thistle, white } from "../utils/colors";
+import { manatee, white, darkBlue } from "../utils/colors";
 
 class Deck extends Component {
   beginQuiz = () => {
@@ -12,6 +12,11 @@ class Deck extends Component {
     const deck = decks[id];
     dispatch(beginQuiz(deck, cards));
     this.props.navigation.navigate("Quiz", { deckId: id });
+  };
+
+  addCard = () => {
+    const id = this.props.route.params.deckId;
+    this.props.navigation.navigate("NewCard", { deckId: id });
   };
 
   render() {
@@ -24,8 +29,14 @@ class Deck extends Component {
           <Text style={styles.deckTitle}>{id}</Text>
           <Text style={styles.deckCards}>{deck.questions.length} cards</Text>
         </View>
-        <TouchableOpacity style={styles.quitzBtn} onPress={this.beginQuiz}>
+        <TouchableOpacity style={[styles.quitzBtn, { backgroundColor: manatee }]} onPress={this.beginQuiz}>
           <Text style={{ color: white }}>Take Quiz!</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.quitzBtn, { backgroundColor: darkBlue }]}
+          onPress={this.addCard}
+        >
+          <Text style={{ color: white }}>Add card</Text>
         </TouchableOpacity>
       </View>
     );
@@ -50,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   quitzBtn: {
-    backgroundColor: thistle,
+    margin:10,
     padding: 10,
     paddingLeft: 50,
     paddingRight: 50,

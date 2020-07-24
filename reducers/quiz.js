@@ -1,4 +1,9 @@
-import { BEGIN_QUIZ, SET_USER_ANSWER, EXIT_QUIZ } from "../actions/quiz";
+import {
+  BEGIN_QUIZ,
+  SET_USER_ANSWER,
+  RESET_QUIZ,
+  EXIT_QUIZ,
+} from "../actions/quiz";
 
 export default function quiz(state = {}, action) {
   switch (action.type) {
@@ -29,6 +34,17 @@ export default function quiz(state = {}, action) {
           };
         }),
       };
+    case RESET_QUIZ: {
+      const { quiz } = action;
+      return {
+        id: quiz.id,
+        answers: state.answers.map((answer, index) => ({
+          questionAnswer: state.answers[index].questionAnswer,
+          userAnswer: null,
+          questionAnsweredCorrectly: null,
+        })),
+      };
+    }
     case EXIT_QUIZ: {
       return {
         id: null,

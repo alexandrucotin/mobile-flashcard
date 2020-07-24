@@ -7,8 +7,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 // Components
 import BottomNav from "./BottomNav";
 import Deck from "./Deck";
-import Quiz from "./Quiz"
-import QuizSum from "./QuizSum"
+import Quiz from "./Quiz";
+import QuizSum from "./QuizSum";
+import NewCard from "./NewCard"
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,13 @@ const Navigation = () => {
           options={{
             animationEnabled: true,
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="NewCard"
+          component={NewCard}
+          options={{
+            animationEnabled: true,
           }}
         />
       </Stack.Navigator>

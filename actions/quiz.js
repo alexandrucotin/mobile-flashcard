@@ -1,12 +1,13 @@
 export const BEGIN_QUIZ = "BEGIN_QUIZ";
-export const EXIT_QUIZ = "EXIT_QUIZ";
 export const SET_USER_ANSWER = "SET_USER_ANSWER";
+export const RESET_QUIZ = "RESET_QUIZ";
+export const EXIT_QUIZ = "EXIT_QUIZ";
 
 export function beginQuiz(deck, cards) {
   return {
     type: BEGIN_QUIZ,
     deck,
-    cards
+    cards,
   };
 }
 
@@ -17,10 +18,17 @@ export function exitQuiz(quizId) {
   };
 }
 
-export function setUserAnswer( answer, index) {
+export function setUserAnswer(answer, index) {
   return {
     type: SET_USER_ANSWER,
     answer,
-    index
+    index,
+  };
+}
+
+export function resetQuiz(quiz) {
+  return {
+    type: RESET_QUIZ,
+    quiz,
   };
 }

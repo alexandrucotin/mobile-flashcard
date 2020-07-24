@@ -49,12 +49,27 @@ class Quiz extends Component {
 
   setCorrectAnswer = () => {
     const { dispatch } = this.props;
-    dispatch(setUserAnswer("correct", this.state.currentQuestionIndex));
+    const { questions, currentQuestionIndex } = this.state;
+    dispatch(setUserAnswer("correct", currentQuestionIndex));
+    if (currentQuestionIndex + 1 === questions.length) {
+      this.props.navigation.navigate("QuizSum", { resetQuiz: this.resetQuiz });
+    }
   };
 
   setIncorrectAnswer = () => {
     const { dispatch } = this.props;
-    dispatch(setUserAnswer("incorrect", this.state.currentQuestionIndex));
+    const { questions, currentQuestionIndex } = this.state;
+    dispatch(setUserAnswer("incorrect", currentQuestionIndex));
+    if (currentQuestionIndex + 1 === questions.length) {
+      this.props.navigation.navigate("QuizSum", { resetQuizUI: this.resetQuiz });
+    }
+  };
+
+  resetQuiz = (quizId) => {
+    this.setState(() => ({
+      currentQuestionIndex: 0,
+    }));
+    this.props.navigation.navigate("Quiz", { deckId: quizId });
   };
 
   exitQuiz = () => {

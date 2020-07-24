@@ -25,7 +25,7 @@ class DeckList extends Component {
   render() {
     const { decks, cards } = this.props;
     return (
-      <View>
+      <View style={{padding:20}}>
         <Text style={styles.title}>List of decks</Text>
         {Object.keys(decks).map((deck) => (
           <TouchableOpacity
@@ -35,7 +35,8 @@ class DeckList extends Component {
             }
           >
             <View style={styles.deckList}>
-              <Text>Take this quitz about {[deck]}</Text>
+              <Text style={{fontSize:25, fontWeight: "bold"}}>{[deck]}</Text>
+              <Text style={{fontSize: 10, marginTop:10}}>number of cards {decks[deck].questions.length}</Text>
               <Feather
                 style={{ marginTop: 20 }}
                 name="arrow-right-circle"
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     padding: 30,
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
   },
   deckTitle: {},
