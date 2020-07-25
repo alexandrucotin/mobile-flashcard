@@ -11,7 +11,7 @@ export default function decks(state = {}, action) {
       const { deck } = action;
       return {
         ...state,
-        [deck.id]: action.deck,
+        ...deck,
       };
     default:
       return state;

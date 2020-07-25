@@ -6,11 +6,10 @@ import Constants from "expo-constants";
 import reducer from "./reducers";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import middleware from "./middleware";
 
 // Navigation
-import Navigation from "./components/Navigation"
-
-
+import Navigation from "./components/Navigation";
 
 function CustomStatusBar({ backgroundColor, ...props }) {
   return (
@@ -22,7 +21,7 @@ function CustomStatusBar({ backgroundColor, ...props }) {
 
 export default function App() {
   return (
-    <Provider store={createStore(reducer)}>
+    <Provider store={createStore(reducer, middleware)}>
       <CustomStatusBar />
       <Navigation />
     </Provider>

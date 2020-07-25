@@ -74,3 +74,12 @@ function setDummyDecks() {
   AsyncStorage.setItem(DECKS, JSON.stringify(decks));
   return Promise.resolve(JSON.stringify(decks));
 }
+
+export function addDeckAsync(deck) {
+  return AsyncStorage.mergeItem(
+    DECKS,
+    JSON.stringify(
+      deck,
+    )
+  );
+}

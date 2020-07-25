@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { receiveDecks } from "../actions/decks";
@@ -25,7 +25,7 @@ class DeckList extends Component {
   render() {
     const { decks, cards } = this.props;
     return (
-      <View style={{padding:20}}>
+      <ScrollView style={{padding:20}}>
         <Text style={styles.title}>List of decks</Text>
         {Object.keys(decks).map((deck) => (
           <TouchableOpacity
@@ -45,7 +45,7 @@ class DeckList extends Component {
             </View>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
     );
   }
 }

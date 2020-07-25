@@ -8,10 +8,27 @@ export function receiveCards(cards) {
   };
 }
 
-export function addCardToDeck(card, deck) {
+function addCardToDeck(card, deck) {
   return {
     type: ADD_CARD_TO_DECK,
     card,
     deck,
+  };
+}
+
+export function handleAddCard() {
+  return (dispatch, getState) => {
+    const { users, authedUser } = getState();
+
+    return _saveQuestion({
+      optionOneText,
+      optionTwoText,
+      author: authedUser,
+    })
+      .then((question) => {
+        dispatch(addQuestion(question));
+        dispatch(updateUserQuestions(users[authedUser], question.id));
+      })
+      .then(() => dispatch(hideLoading()));
   };
 }
