@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { darkBlue, white, green, red } from "../utils/colors";
+import { handleAddCard } from "../actions/cards";
 
 class NewCard extends Component {
   state = {
@@ -27,17 +28,27 @@ class NewCard extends Component {
       answer: answer,
     }));
   };
-
+  generateUID = () => {
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
+  };
   createCard = () => {
     const { dispatch } = this.props;
-
-    // Add card to async storage
-
+    const deckId = this.props.route.params.deckId;
+    const cardId = this.generateUID();
+    const newCard = {
+      [cardId]: {
+        id: cardId,
+        question: this.state.question,
+        backCard: this.state.backCard,
+        answer: this.state.answer,
+        deck: deckId,
+      },
+    };
     // Update redux store
-    dispatch(addCard());
-
-    // Navigates to deck View
-    this.props.navigation.navigate("Deck", { deckId: this.state.value });
+    dispatch(handleAddCard(newCard, this.props.navigation.navigate, deckId, cardId));
   };
 
   render() {
@@ -57,7 +68,7 @@ class NewCard extends Component {
           <Text>Text on the back of the card</Text>
           <TextInput
             style={styles.textInput}
-            onChangeText={this.onChangeQuestion}
+            onChangeText={this.onChangeBackCard}
           />
         </View>
         <View style={[styles.formInput, { marginBottom: 50 }]}>
@@ -70,7 +81,7 @@ class NewCard extends Component {
                   backgroundColor: green,
                 },
               ]}
-              onPress={this.selectedAnswer("correct")}
+              onPress={() => this.selectedAnswer("correct")}
             >
               <Text>Corect</Text>
             </TouchableOpacity>
@@ -82,14 +93,14 @@ class NewCard extends Component {
                   backgroundColor: red,
                 },
               ]}
-              onPress={this.selectedAnswer("incorrect")}
+              onPress={() => this.selectedAnswer("incorrect")}
             >
               <Text>Incorect</Text>
             </TouchableOpacity>
           </View>
         </View>
         <TouchableOpacity
-          onPress={this.createDeck}
+          onPress={this.createCard}
           style={[
             styles.button,
             {
@@ -97,7 +108,7 @@ class NewCard extends Component {
             },
           ]}
         >
-          <Text style={{ color: white }}>Create deck</Text>
+          <Text style={{ color: white }}>Create card</Text>
         </TouchableOpacity>
       </View>
     );

@@ -60,6 +60,10 @@ function setDummyCards() {
   return Promise.resolve(JSON.stringify(cards));
 }
 
+export function addCardAsync(card) {
+  return AsyncStorage.mergeItem(CARDS, JSON.stringify(card));
+}
+
 // SET DECKS
 
 export function fetchDecks() {
@@ -76,10 +80,18 @@ function setDummyDecks() {
 }
 
 export function addDeckAsync(deck) {
-  return AsyncStorage.mergeItem(
-    DECKS,
-    JSON.stringify(
-      deck,
-    )
-  );
+  return AsyncStorage.mergeItem(DECKS, JSON.stringify(deck));
+}
+
+export function addLinkAsync(deckId, cardId) {
+  return AsyncStorage.getItem(DECKS).then((decks) => {
+    const parsedDecks = JSON.parse(decks);
+    const deckQuestion = [...parsedDecks[deckId].questions, cardId];
+    AsyncStorage.mergeItem(
+      DECKS,
+      JSON.stringify({
+        [deckId]: {questions: deckQuestion },
+      })
+    );
+  });
 }

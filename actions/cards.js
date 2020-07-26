@@ -1,5 +1,7 @@
 export const RECEIVE_CARDS = "RECEIVE_CARDS";
 export const ADD_CARD_TO_DECK = "ADD_CARD_TO_DECK";
+import { addCardAsync, fetchCards } from "../utils/initialData";
+import { handleAddLink, handleRefreshDecks } from "../actions/decks";
 
 export function receiveCards(cards) {
   return {
@@ -8,27 +10,38 @@ export function receiveCards(cards) {
   };
 }
 
-function addCardToDeck(card, deck) {
+function addCard(card) {
   return {
     type: ADD_CARD_TO_DECK,
     card,
-    deck,
   };
 }
 
-export function handleAddCard() {
-  return (dispatch, getState) => {
-    const { users, authedUser } = getState();
-
-    return _saveQuestion({
-      optionOneText,
-      optionTwoText,
-      author: authedUser,
-    })
-      .then((question) => {
-        dispatch(addQuestion(question));
-        dispatch(updateUserQuestions(users[authedUser], question.id));
+export function handleAddCard(card, navigate, deckId, cardId) {
+  return (dispatch) => {
+    return addCardAsync(card)
+      .then(() => {
+        dispatch(addCard(card));
       })
-      .then(() => dispatch(hideLoading()));
+      .then(() => {
+       return dispatch(handleAddLink(deckId, cardId));
+      })
+      .then(() => {
+        dispatch(handleRefreshDecks());
+      })
+      .then(() => {
+        dispatch(handleRefreshCards());
+      })
+      .then(() => {
+        navigate("Deck", { deckId: deckId });
+      });
+  };
+}
+
+export function handleRefreshCards() {
+  return (dispatch) => {
+    return fetchCards().then((cards) => {
+      dispatch(receiveCards(cards));
+    });
   };
 }

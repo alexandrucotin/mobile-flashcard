@@ -3,15 +3,15 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
 import { beginQuiz } from "../actions/quiz";
 
-import { manatee, white } from "../utils/colors";
+import { manatee, white, darkBlue } from "../utils/colors";
 
 class Deck extends Component {
   beginQuiz = () => {
     const id = this.props.route.params.deckId;
     const { dispatch, decks, cards } = this.props;
     const deck = decks[id];
-    if (deck.questions === 0) {
-      Alert.alert("Error", "The deck is empty!");
+    if (deck.questions.length === 0) {
+      Alert.alert("Error", "The deck is empty! Please add atleast a card.");
     } else {
       dispatch(beginQuiz(deck, cards));
       this.props.navigation.navigate("Quiz", { deckId: id });
@@ -24,13 +24,10 @@ class Deck extends Component {
   };
 
   render() {
-    const { decks } = this.props;
+    const { decks, cards } = this.props;
     const id = this.props.route.params.deckId;
     const deck = decks[id];
-    console.log("DECKS:", decks);
-    console.log("DECK: ", deck);
-    console.log("DECK ID: ", id);
-    console.log("ROUTE PARAMS: ", this.props.route.params);
+    console.log(cards)
     return (
       <View style={styles.viewStyle}>
         <View style={styles.textContainer}>
@@ -43,12 +40,12 @@ class Deck extends Component {
         >
           <Text style={{ color: white }}>Take Quiz!</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={[styles.quitzBtn, { backgroundColor: darkBlue }]}
           onPress={this.addCard}
         >
           <Text style={{ color: white }}>Add card</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     );
   }

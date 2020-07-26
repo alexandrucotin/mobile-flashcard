@@ -1,4 +1,4 @@
-import { ADD_DECK, RECEIVE_DECKS } from "../actions/decks";
+import { ADD_DECK, RECEIVE_DECKS, ADD_LINK} from "../actions/decks";
 
 export default function decks(state = {}, action) {
   switch (action.type) {
@@ -13,6 +13,16 @@ export default function decks(state = {}, action) {
         ...state,
         ...deck,
       };
+    case ADD_LINK: {
+      const { deckId, cardId } = action;
+      return {
+        ...state,
+        [deckId]: {
+          id: state[deckId].id,
+          questions: [...state[deckId].questions, cardId],
+        },
+      };
+    }
     default:
       return state;
   }

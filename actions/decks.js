@@ -1,7 +1,7 @@
 export const RECEIVE_DECKS = "RECEIVE_DECKS";
 export const ADD_DECK = "ADD_DECK";
-import { addDeckAsync } from "../utils/initialData";
-import { AsyncStorage } from "react-native";
+export const ADD_LINK = "ADD_LINK";
+import { addDeckAsync, addLinkAsync, fetchDecks } from "../utils/initialData";
 
 export function receiveDecks(decks) {
   return {
@@ -17,12 +17,37 @@ export function addDeck(deck) {
   };
 }
 
+function addLink(deckId, cardId) {
+  return {
+    type: ADD_LINK,
+    deckId,
+    cardId,
+  };
+}
+
+export function handleRefreshDecks() {
+  return (dispatch) => {
+    return fetchDecks().then((decks) => {
+      console.log("Here");
+      console.log(decks)
+      dispatch(receiveDecks(decks));
+    });
+  };
+}
+
 export function handleAddDeck(deck, navigate, deckId) {
   return (dispatch) => {
     return addDeckAsync(deck).then(() => {
       dispatch(addDeck(deck));
-      console.log( "The deck id is: ", deck.id)
-      navigate("Deck", {deckId: deckId})
+      navigate("Deck", { deckId: deckId });
+    });
+  };
+}
+
+export function handleAddLink(deckId, cardId) {
+  return (dispatch) => {
+    return addLinkAsync(deckId, cardId).then(() => {
+      dispatch(addLink(deckId, cardId));
     });
   };
 }
