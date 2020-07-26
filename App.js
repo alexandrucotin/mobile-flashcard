@@ -11,6 +11,8 @@ import middleware from "./middleware";
 // Navigation
 import Navigation from "./components/Navigation";
 
+import { setLocalNotification } from "./utils/notifications";
+
 function CustomStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -19,11 +21,18 @@ function CustomStatusBar({ backgroundColor, ...props }) {
   );
 }
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer, middleware)}>
-      <CustomStatusBar />
-      <Navigation />
-    </Provider>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    // setLocalNotification();
+  }
+  render() {
+    return (
+      <Provider store={createStore(reducer, middleware)}>
+        <CustomStatusBar />
+        <Navigation />
+      </Provider>
+    );
+  }
 }
+
+export default App;

@@ -1,5 +1,7 @@
 import {
   BEGIN_QUIZ,
+  NEXT_QUESTION,
+  PREV_QUESTION,
   SET_USER_ANSWER,
   RESET_QUIZ,
   EXIT_QUIZ,
@@ -16,6 +18,17 @@ export default function quiz(state = {}, action) {
           userAnswer: null,
           questionAnsweredCorrectly: null,
         })),
+        currentQuestionIndex: 0,
+      };
+    case NEXT_QUESTION:
+      return {
+        ...state,
+        currentQuestionIndex: state.currentQuestionIndex + 1,
+      };
+    case PREV_QUESTION:
+      return {
+        ...state,
+        currentQuestionIndex: state.currentQuestionIndex - 1,
       };
     case SET_USER_ANSWER:
       const { answer, index } = action;
@@ -33,6 +46,7 @@ export default function quiz(state = {}, action) {
             questionAnsweredCorrectly,
           };
         }),
+        currentQuestionIndex: state.currentQuestionIndex,
       };
     case RESET_QUIZ: {
       const { quiz } = action;
@@ -43,6 +57,7 @@ export default function quiz(state = {}, action) {
           userAnswer: null,
           questionAnsweredCorrectly: null,
         })),
+        currentQuestionIndex: 0,
       };
     }
     case EXIT_QUIZ: {

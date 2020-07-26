@@ -28,8 +28,6 @@ function addLink(deckId, cardId) {
 export function handleRefreshDecks() {
   return (dispatch) => {
     return fetchDecks().then((decks) => {
-      console.log("Here");
-      console.log(decks)
       dispatch(receiveDecks(decks));
     });
   };

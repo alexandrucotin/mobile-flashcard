@@ -5,6 +5,12 @@ import { beginQuiz } from "../actions/quiz";
 
 import { manatee, white, darkBlue } from "../utils/colors";
 
+//Notification
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from "../utils/notifications";
+
 class Deck extends Component {
   beginQuiz = () => {
     const id = this.props.route.params.deckId;
@@ -16,6 +22,8 @@ class Deck extends Component {
       dispatch(beginQuiz(deck, cards));
       this.props.navigation.navigate("Quiz", { deckId: id });
     }
+
+    // clearLocalNotification().then(setLocalNotification);
   };
 
   addCard = () => {
@@ -27,7 +35,6 @@ class Deck extends Component {
     const { decks, cards } = this.props;
     const id = this.props.route.params.deckId;
     const deck = decks[id];
-    console.log(cards)
     return (
       <View style={styles.viewStyle}>
         <View style={styles.textContainer}>

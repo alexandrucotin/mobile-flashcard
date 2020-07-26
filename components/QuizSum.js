@@ -69,10 +69,10 @@ class QuizSum extends Component {
   };
 
   resetQuiz = () => {
-    const resetQuizUI = this.props.route.params.resetQuiz;
     const { dispatch, quiz } = this.props;
     dispatch(resetQuiz(quiz));
-    resetQuizUI(quiz.id);
+    console.log(quiz.id)
+    this.props.navigation.navigate("Quiz", { deckId: quiz.id });
   };
 
   render() {

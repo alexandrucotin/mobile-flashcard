@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 // Redux
 import { connect } from "react-redux";
-import { setUserAnswer } from "../actions/quiz";
+import { setUserAnswer, nextQuestionRedux, prevQuestionRedux } from "../actions/quiz";
 
 // Components
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -15,7 +15,6 @@ import { darkBlue } from "../utils/colors";
 
 class Quiz extends Component {
   state = {
-    currentQuestionIndex: 0,
     questions: [],
     showAnswer: false,
   };
@@ -36,40 +35,31 @@ class Quiz extends Component {
   };
 
   nextQuestion = () => {
-    this.setState((state) => ({
-      currentQuestionIndex: state.currentQuestionIndex + 1,
-    }));
+    const { dispatch } = this.props;
+    dispatch(nextQuestionRedux());
   };
 
   prevQuestion = () => {
-    this.setState((state) => ({
-      currentQuestionIndex: state.currentQuestionIndex - 1,
-    }));
+    const { dispatch } = this.props;
+    dispatch(prevQuestionRedux());
   };
 
   setCorrectAnswer = () => {
-    const { dispatch } = this.props;
-    const { questions, currentQuestionIndex } = this.state;
-    dispatch(setUserAnswer("correct", currentQuestionIndex));
-    if (currentQuestionIndex + 1 === questions.length) {
-      this.props.navigation.navigate("QuizSum", { resetQuiz: this.resetQuiz });
+    const { dispatch, quiz} = this.props;
+    const { questions } = this.state;
+    dispatch(setUserAnswer("correct", quiz.currentQuestionIndex));
+    if (quiz.currentQuestionIndex + 1 === questions.length) {
+      this.props.navigation.navigate("QuizSum");
     }
   };
 
   setIncorrectAnswer = () => {
-    const { dispatch } = this.props;
-    const { questions, currentQuestionIndex } = this.state;
-    dispatch(setUserAnswer("incorrect", currentQuestionIndex));
-    if (currentQuestionIndex + 1 === questions.length) {
-      this.props.navigation.navigate("QuizSum", { resetQuizUI: this.resetQuiz });
+    const { dispatch, quiz } = this.props;
+    const { questions } = this.state;
+    dispatch(setUserAnswer("incorrect", quiz.currentQuestionIndex));
+    if (quiz.currentQuestionIndex + 1 === questions.length) {
+      this.props.navigation.navigate("QuizSum");
     }
-  };
-
-  resetQuiz = (quizId) => {
-    this.setState(() => ({
-      currentQuestionIndex: 0,
-    }));
-    this.props.navigation.navigate("Quiz", { deckId: quizId });
   };
 
   exitQuiz = () => {
@@ -80,11 +70,12 @@ class Quiz extends Component {
     this.props.navigation.navigate("QuizSum");
   };
   render() {
-    const { currentQuestionIndex, questions } = this.state;
+    const { questions } = this.state;
+    const {currentQuestionIndex} = this.props.quiz
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.counterText}>
-          {this.state.currentQuestionIndex + 1} / {this.state.questions.length}
+          {currentQuestionIndex + 1} / {this.state.questions.length}
         </Text>
         <View style={styles.cardContainer}>
           <Card
@@ -93,7 +84,7 @@ class Quiz extends Component {
             showAnswer={this.showAnswer}
             setCorrectAnswer={this.setCorrectAnswer}
             setIncorrectAnswer={this.setIncorrectAnswer}
-            currentQuestionIndex={this.state.currentQuestionIndex}
+            currentQuestionIndex={currentQuestionIndex}
           />
           <ArrowsNavigation
             totalQuestions={questions.length - 1}
