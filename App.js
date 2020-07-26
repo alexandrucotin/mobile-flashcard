@@ -23,7 +23,7 @@ function CustomStatusBar({ backgroundColor, ...props }) {
 
 class App extends React.Component {
   componentDidMount() {
-    // setLocalNotification();
+    setLocalNotification();
   }
   render() {
     return (

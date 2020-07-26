@@ -28,7 +28,7 @@ PODS:
     - UMCore
     - UMPermissionsInterface
     - UMTaskManagerInterface
-  - EXNotifications (0.4.0):
+  - EXNotifications (0.3.3):
     - UMCore
     - UMPermissionsInterface
   - EXPermissions (9.0.1):
@@ -589,7 +589,7 @@ SPEC CHECKSUMS:
   EXKeepAwake: 1c77f2d31eafaea3410c00957669f306f340b843
   EXLinearGradient: d25940ede1e798882f57715cff9edb4075d95e2d
   EXLocation: c50022a5a829bad7a621d42eaecc60e171d8efa7
-  EXNotifications: de7f9617e80763b5f112e2a2bdf81aa2dfa13475
+  EXNotifications: 8765cb831ff7697a03faf2e4293f4cf63c164f52
   EXPermissions: b6d7134b7215c33420318c2bbb5d362c20ac9726
   EXSplashScreen: 2290058b9a3760ea3906ac552baff24d5d33b725
   EXSQLite: b001ba35deb3001bd6e4b256581a558ae745ef2f

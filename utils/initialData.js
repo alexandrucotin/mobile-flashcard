@@ -35,10 +35,10 @@ const cards = {
 };
 
 const decks = {
-  // react: {
-  //   id: "react",
-  //   questions: ["x8f0y6ziyjabvozdd253nd", "n6i6ok3ym7mf1p33lnez"],
-  // },
+  react: {
+    id: "react",
+    questions: ["x8f0y6ziyjabvozdd253nd", "n6i6ok3ym7mf1p33lnez"],
+  },
   web: {
     id: "web",
     questions: ["am8ehyc8byjqgar0jgpub9", "loxhs1bqm25b708cmbf3g"],

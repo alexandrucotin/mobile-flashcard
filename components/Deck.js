@@ -22,8 +22,7 @@ class Deck extends Component {
       dispatch(beginQuiz(deck, cards));
       this.props.navigation.navigate("Quiz", { deckId: id });
     }
-
-    // clearLocalNotification().then(setLocalNotification);
+    clearLocalNotification().then(setLocalNotification);
   };
 
   addCard = () => {
